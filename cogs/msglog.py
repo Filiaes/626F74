@@ -66,7 +66,7 @@ class MsgLog(commands.Cog):
     @commands.Cog.listener()
     async def on_message_edit(self, before, message):
         # This event is triggered when an embed is added or removed
-        # from a messaged
+        # from a message
         if before.content == message.content:
             return 0
 

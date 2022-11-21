@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import discord, os , sys
+import discord, os, sys
 from discord.ext import commands
 if not os.path.isfile("config.py"):
     sys.exit("'config.py' not found - quit.")

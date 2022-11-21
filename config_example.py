@@ -3,7 +3,7 @@
 token = "yourtokenhere"
 prefix = "/" # prefix used for bot commands
 status = "online" # online, offline, idle, dnd, do_not_disturb, invisible
-logall = False # Log everything (turn on to debug)
+logall = False # Log everything (set True to debug)
 logs = 1234567890 # log channel ID
 activity = False # display activity
 aname = "test" # activity name
