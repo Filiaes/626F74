@@ -2,7 +2,6 @@ import feedparser, dateparser, os, sys
 from discord.ext import tasks, commands
 import config as cfg
 
-feed = feedparser.parse('https://www.heise.de/security/rss/news-atom.xml')
 logf = "./rss_data"
 
 class Rss(commands.Cog):
@@ -16,6 +15,7 @@ class Rss(commands.Cog):
 
     @tasks.loop(seconds=60.0)
     async def printer(self):
+        feed = feedparser.parse('https://www.heise.de/security/rss/news-atom.xml')
         if os.path.isfile("./rss_data"):
             data = []
             with open(logf, "r") as f:
