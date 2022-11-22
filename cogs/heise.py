@@ -2,21 +2,22 @@ import feedparser, dateparser, os, sys
 from discord.ext import tasks, commands
 import config as cfg
 
-logf = "./rss_data"
+path = "./data"
+logf = "./data/heise"
 
-class Rss(commands.Cog):
+class Heise(commands.Cog):
     def __init__(self, client):
         self.index = 0
         self.client = client
-        self.printer.start()
+        self.parser.start()
 
     def cog_unload(self):
-        self.printer.cancel()
+        self.parser.cancel()
 
-    @tasks.loop(seconds=60.0)
-    async def printer(self):
+    @tasks.loop(seconds=300.0)
+    async def parser(self):
         feed = feedparser.parse('https://www.heise.de/security/rss/news-atom.xml')
-        if os.path.isfile("./rss_data"):
+        if os.path.isfile(logf) and os.path.exists(path):
             data = []
             with open(logf, "r") as f:
                 for line in f:
@@ -37,14 +38,20 @@ class Rss(commands.Cog):
                     timestamp = int(dateparser.parse(entry["published"]).timestamp())
                     f.write(f"{timestamp}" + '\n')
 
+        elif os.path.exists(path):
+            with open(logf, 'w') as f:
+                for entry in feed.entries:
+                    timestamp = int(dateparser.parse(entry["published"]).timestamp())
+                    f.write(f"{timestamp}" + '\n')
         else:
+            os.makedirs(path)
             with open(logf, 'w') as f:
                 for entry in feed.entries:
                     timestamp = int(dateparser.parse(entry["published"]).timestamp())
                     f.write(f"{timestamp}" + '\n')
     
-    @printer.before_loop
-    async def before_printer(self):
+    @parser.before_loop
+    async def before_parser(self):
         await self.client.wait_until_ready()
 
 async def send_feed(client, flink, channel_id):
@@ -52,4 +59,4 @@ async def send_feed(client, flink, channel_id):
     await channel.send(flink)
 
 async def setup(client):
-    await client.add_cog(Rss(client))
+    await client.add_cog(Heise(client))

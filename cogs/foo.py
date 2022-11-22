@@ -8,7 +8,7 @@ class FooMsg(commands.Cog):
         @client.command()
         async def foo(ctx):
             channel = client.get_channel(1039145875852755004)
-            await channel.send('Welcome' + '\n' + '\n' + 'you are probably here because you need some help with a service hosted by filiaes. Please reload the channel you have joined, if you find yourself unable to write. The role assignment needs a couple of seconds. Feel free to ask your questions afterwards.')
+            await channel.send('Welcome,' + '\n' + '\n' + 'you are probably here because you need some help with a service hosted by filiaes. Please reload the channel you have joined, if you find yourself unable to write. The role assignment needs a couple of seconds. Feel free to ask your questions afterwards.')
 """
 async def setup(client):
     await client.add_cog(FooMsg(client))
