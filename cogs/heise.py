@@ -2,7 +2,6 @@ import feedparser, dateparser, os, sys
 from discord.ext import tasks, commands
 import config as cfg
 
-path = "./data"
 logf = "./data/heise"
 
 class Heise(commands.Cog):
@@ -17,7 +16,7 @@ class Heise(commands.Cog):
     @tasks.loop(seconds=300.0)
     async def parser(self):
         feed = feedparser.parse('https://www.heise.de/security/rss/news-atom.xml')
-        if os.path.isfile(logf) and os.path.exists(path):
+        if os.path.isfile(logf) and os.path.exists(cfg.path):
             data = []
             with open(logf, "r") as f:
                 for line in f:
@@ -38,13 +37,13 @@ class Heise(commands.Cog):
                     timestamp = int(dateparser.parse(entry["published"]).timestamp())
                     f.write(f"{timestamp}" + '\n')
 
-        elif os.path.exists(path):
+        elif os.path.exists(cfg.path):
             with open(logf, 'w') as f:
                 for entry in feed.entries:
                     timestamp = int(dateparser.parse(entry["published"]).timestamp())
                     f.write(f"{timestamp}" + '\n')
         else:
-            os.makedirs(path)
+            os.makedirs(cfg.path)
             with open(logf, 'w') as f:
                 for entry in feed.entries:
                     timestamp = int(dateparser.parse(entry["published"]).timestamp())

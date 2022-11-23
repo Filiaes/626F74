@@ -57,7 +57,7 @@ class MsgLog(commands.Cog):
         message_log_id = cfg.logs
         await send_to_log(self.client, embed, channel_id=message_log_id)
 
-    # Log all messages
+    # Log all messages (debugging)
     if cfg.logall:
         @commands.Cog.listener()
         async def on_message(self, message):
