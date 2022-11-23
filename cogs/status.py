@@ -11,7 +11,7 @@ class Status(commands.Cog):
     def cog_unload(self):
         self.status.cancel()
 
-    @tasks.loop(seconds=60.0)
+    @tasks.loop(seconds=600.0)
     async def status(self):
         # getpid = str(os.system("ps -ef | grep bot.py | tr -s ' ' | cut -d ' ' -f2 | head -1"))
         getpid = int(subprocess.check_output("ps -ef | grep bot.py | tr -s ' ' | cut -d ' ' -f2 | head -1", shell=True))
