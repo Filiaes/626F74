@@ -13,11 +13,8 @@ class Status(commands.Cog):
 
     @tasks.loop(seconds=600.0)
     async def status(self):
-        # getpid = str(os.system("ps -ef | grep bot.py | tr -s ' ' | cut -d ' ' -f2 | head -1"))
         getpid = int(subprocess.check_output("ps -ef | grep bot.py | tr -s ' ' | cut -d ' ' -f2 | head -1", shell=True))
-        # print(f"{getpid}")
         pid = str(getpid)
-        # print(f"{pid}")
         await self.client.change_presence(activity=discord.Activity(type=cfg.atype, name=pid), status = cfg.status)
 
     @status.before_loop
