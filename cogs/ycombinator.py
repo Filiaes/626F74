@@ -15,7 +15,7 @@ class YCombinator(commands.Cog):
 
     @tasks.loop(seconds=30.0)
     async def parser(self):
-        feed = feedparser.parse('https://hnrss.org/frontpage')
+        feed = feedparser.parse('https://news.ycombinator.com/rss')
         if os.path.isfile(logf) and os.path.exists(cfg.path):
             data = []
             with open(logf, "r") as f:
